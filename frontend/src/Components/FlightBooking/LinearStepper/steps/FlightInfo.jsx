@@ -25,7 +25,7 @@ const FlightDetails = ({ formData, updateFormData, nextStep }) => {
   const formik = useFormikContext();
   const [selectedFlightIndex, setSelectedFlightIndex] = useState(null);
   const [selectedFlightData, setSelectedFlightData] = useState(null);
-  const [selectedType , setSelectType] = useState('business')
+  const [selectedType, setSelectType] = useState('business')
   const FlightCustomerDetail = formik.values;
   const [data, setData] = useState([]);
 
@@ -63,6 +63,9 @@ const FlightDetails = ({ formData, updateFormData, nextStep }) => {
       airline: selectedFlight?.company,
       flight_id: selectedFlight?._id,
       cabin: value,
+      journeyTime: selectedFlight?.journeyTime,
+      arrivalTime: selectedFlight?.arrivalTime,
+      hour:  selectedFlight?.hour,
       childFare: value === 'business' ? selectedFlight?.fare?.business?.child : selectedFlight?.fare.economy.child,
       adultFare: value === 'business' ? selectedFlight?.fare.business.adult : selectedFlight?.fare.economy.adult
     };
@@ -75,7 +78,7 @@ const FlightDetails = ({ formData, updateFormData, nextStep }) => {
     <div>
       {flightdata.length > 0 ? flightdata.map((flight, index) => (
         <Accordion className='accordion' key={index}>
-          <AccordionSummary style={{display:'flex', justifyContent:'space-between'}}>
+          <AccordionSummary style={{ display: 'flex', justifyContent: 'space-between' }}>
             <CardMedia
               component="img"
               alt="FlightLogo"
@@ -183,7 +186,7 @@ const FlightDetails = ({ formData, updateFormData, nextStep }) => {
                     fullWidth={true}
                     onChange={(e) => handleCheck(flight.id, e.target.value)} // Pass the event
                   >
-                    <MenuItem  value="economy">Economy</MenuItem>
+                    <MenuItem value="economy">Economy</MenuItem>
                     <MenuItem value="business" >Business</MenuItem>
                   </Field>
                 </Grid>
@@ -196,9 +199,9 @@ const FlightDetails = ({ formData, updateFormData, nextStep }) => {
                     label="Adult Fare"
                     variant="outlined"
                     fullWidth={true}
-                    value={ selectedType === 'business'
-                        ? selectedFlightData?.fare.business.adult
-                        : selectedFlightData?.fare.economy.adult
+                    value={selectedType === 'business'
+                      ? selectedFlightData?.fare.business.adult
+                      : selectedFlightData?.fare.economy.adult
                     }
                   />
                 </Grid>

@@ -43,10 +43,7 @@ function getStepContent(step, formData, updateFormData, nextStep) {
   }
 }
 
-async function submitBooking(values){
-  const response =  await axios.post(`http://localhost:8800/api/booking/bookings` ,values);
-  return response;
-}
+
 
 const LinearStepper = () => {
   const classes = useStyles();
@@ -55,6 +52,60 @@ const LinearStepper = () => {
   const steps = getSteps();
   const [formData, setFormData] = useState({}); // Example state to hold form data
   console.log(formData)
+
+  async function submitBooking(values, formValue) {
+    console.log("dataincom", values, formValue)
+  
+    const newData = {
+      flightType: formValue.flightType,
+      flight_id: formValue.flight_id,
+      company: formValue.airline,
+      origin: values.origin,
+      destination: values.destination,
+      journeyDate: values.journeyDate,
+      returnDate: values.returnDate,
+      journeyTime: formValue.journeyTime,
+      arrivalTime: formValue.arrivalTime,
+      hour: formValue.hour,
+      adultFare: formValue.adultFare,
+      childFare: formValue.childFare,
+      adults: formValue.adults,
+      children: formValue.children, 
+      flightClass:formValue.cabin,
+      pnrNumber :values.pnrNumber,
+      passengers: [
+        ...values.adults
+          .filter((item) => item.firstName !== "")
+          .map((item) => ({
+            fullName: item.firstName,
+            age: item?.age ?? 0,  // Provide the actual age from your form
+            gender: item.gender,
+            email: item.email,
+            phone: item.phoneNumber,
+          })),
+        ...values.children
+          .filter((item) => item.firstName !== "")
+          .map((item) => ({
+            fullName: item.firstName,
+            age: item?.age ?? 0,  // Provide the actual age from your form
+            gender: item.gender,
+            email: item.email,
+            phone: item.phoneNumber,
+          })),
+      ],
+    };
+    
+    
+    const response = await axios.post(`http://localhost:8800/api/booking/bookings`, newData);
+    if(response.status === 201)
+    {
+      nextStep();
+    }
+    return response;
+  }
+
+
+
 
   // Function to update form data
   const updateFormData = (newData) => {
@@ -134,15 +185,16 @@ const LinearStepper = () => {
       <React.Fragment>
         {activeStep === steps.length ? (
           <Typography variant="h3" align="center">
-            Thanku
+            Thanku 
+            your ticket is comfirm 
           </Typography>
         ) : (
           <>
             <Formik
               initialValues={formDefaultValues}
               // validationSchema={formSchema}
-              onSubmit={ async(values, { resetForm }) => {
-               const reponse =  await submitBooking(values)
+              onSubmit={async (values, { resetForm }) => {
+                const reponse = await submitBooking(values, formData)
                 resetForm();
               }}
             >
@@ -170,24 +222,24 @@ const LinearStepper = () => {
                     </Button>
                     {
                       activeStep === steps.length - 1 ?
-                       <button
-                        type="submit"
-                       >
-                       Submit
-                       </button>
-                      :
-                      <Button
-                        className={classes.button}
-                        variant="contained"
-                        color="primary"
-                        onClick={handleNext}
-                        type="button"
-                    >
-                      Next
-                    </Button>
+                        <button
+                          type="submit"
+                        >
+                          Submit
+                        </button>
+                        :
+                        <Button
+                          className={classes.button}
+                          variant="contained"
+                          color="primary"
+                          onClick={handleNext}
+                          type="button"
+                        >
+                          Next
+                        </Button>
                     }
-                 </div>
-                    
+                  </div>
+
                 </Form>
               )}
             </Formik>

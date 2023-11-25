@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Paper,} from '@mui/material';
-import { Grid, TextField, Typography, Button,MenuItem,Select } from "@mui/material";
+import { Paper, } from '@mui/material';
+import { Grid, TextField, Typography, Button, MenuItem, Select } from "@mui/material";
 import { useFormikContext, Field, ErrorMessage } from "formik";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
@@ -9,7 +9,7 @@ import FormControl from "@mui/material/FormControl";
 import Box from '@mui/material/Box';
 import './BookingInfo.css';
 
-import {CiCircleRemove} from 'react-icons/ci'
+import { CiCircleRemove } from 'react-icons/ci'
 
 
 // import images'
@@ -31,7 +31,7 @@ const BookingInfo = ({ formData, updateFormData, nextStep }) => {
   const [paymentMethod, setPaymentMethod] = useState('EasyPaisa');
   const [originValue, setOriginValue] = useState("");
   const [destinationValue, setDestinationValue] = useState("");
-  
+
 
   function handleFlightType(value) {
     if (value === "oneWay") {
@@ -47,7 +47,7 @@ const BookingInfo = ({ formData, updateFormData, nextStep }) => {
   const handleAddCity = () => {
     setCities([...cities, { to: "", from: "", departureDate: "" }]);
   }
-    const handleRemoveCity =(cityIndex) =>{
+  const handleRemoveCity = (cityIndex) => {
     // Define the logic to remove a city from your 'cities' state or data
     // For example, if 'cities' is an array of city objects, you can remove a city like this:
     const updatedCities = cities.filter((city, index) => index !== cityIndex);
@@ -109,237 +109,237 @@ const BookingInfo = ({ formData, updateFormData, nextStep }) => {
 
   return (
     <>
-    <div className="booking">
-    <Typography variant="h6" gutterBottom>
-      Booking Details
-    </Typography>
-  
-    <FormControl className="formcontrol">
-      <RadioGroup
-        row
-        aria-label="row-radio-buttons-group"
-        name="row-radio-buttons-group"
-        onChange={(e) => {
-          formik.handleChange(e);
-          handleFlightType(e.target.value);
-        }}
-        value={formik.values["row-radio-buttons-group"]}
-        className="mb-3"
-      >
-        <FormControlLabel
-          value="oneWay"
-          control={<Radio />}
-          label="One Way Trip"
-        />
-        <FormControlLabel
-          value="roundWay"
-          control={<Radio />}
-          label="Round Way Trip"
-        />
-        <FormControlLabel
-          value="multicity"
-          control={<Radio />}
-          label="Multicity Trip"
-        />
-      </RadioGroup>
-    </FormControl>
-    <br></br>
-    <hr/>
-  <br></br>
-  {flightType === "multicity" && cities.map((city, index) => (
-  <div key={index} className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
-    <Field
-      name={`city${index}.to`}
-      as={TextField}
-      label={`To`}
-      variant="outlined"
-      fullWidth
-    />
-    <Field
-      name={`city${index}.from`}
-      as={TextField}
-      label={`From`}
-      variant="outlined"
-      fullWidth
-    />
-    <Field
-      name={`city${index}.departureDate`}
-      as={TextField}
-      label={`Departure Date`}
-      type="date"
-      variant="outlined"
-      fullWidth
-      InputLabelProps={{
-        shrink: true,
-      }}
-      inputProps={{
-        min: "2023-11-08", // Set the minimum date to November 8, 2023
-      }}
-    />
-   
-      <CiCircleRemove  className="IconDiv" variant="outlined" onClick={() => handleRemoveCity(index)}/>
-    
-  </div>
-))}
-{flightType === "multicity" && (
-  <Button variant="outlined" onClick={handleAddCity}  className="flightbtn">
-    Add Flight
-  </Button>
-)}
+      <div className="booking">
+        <Typography variant="h6" gutterBottom>
+          Booking Details
+        </Typography>
 
-    {flightType !== "multicity" && (
-      <Grid container spacing={3}>
-      <Grid item xs={3} className="mb-3">
-    <Field
-      name="origin"
-      as={TextField}
-      label="From"
-      variant="outlined"
-      fullWidth
-      onChange={(e) => setOriginValue(e.target.value)}
-     
-    />
-    <ErrorMessage name="origin" component="div" className="text-danger" />
-  </Grid>
-  <Grid item xs={3} className="mb-3">
-    <Field
-      name="destination"
-      as={TextField}
-      label="Destination"
-      variant="outlined"
-      fullWidth
-      onChange={(e) => setDestinationValue(e.target.value)}
-     
-    />
-    <ErrorMessage name="destination" component="div" className="text-danger" />
-  </Grid>
-        <Grid item xs={3} className="mb-3">
-          <Field
-            name="journeyDate"
-            as={TextField}
-            label="Journey Date"
-            type="date"
-            variant="outlined"
-            fullWidth
-            InputLabelProps={{
-              shrink: true,
+        <FormControl className="formcontrol">
+          <RadioGroup
+            row
+            aria-label="row-radio-buttons-group"
+            name="row-radio-buttons-group"
+            onChange={(e) => {
+              formik.handleChange(e);
+              handleFlightType(e.target.value);
             }}
-            inputProps={{
-              min: "2023-11-08", // Set the minimum date to November 8, 2023
-            }}
-          />
-          <ErrorMessage name="journeyDate" component="div" className="text-danger" />
-        </Grid>
-        <Grid item xs={3} className="mb-3">
-          <Field
-            name="returnDate"
-            as={TextField}
-            label="Return Date"
-            type="date"
-            disabled={oneWayTrip}
-            variant="outlined"
-            fullWidth
-            InputLabelProps={{
-              shrink: true,
-            }}
-            inputProps={{
-              min: "2023-11-08", // Set the minimum date to November 8, 2023
-            }}
-          />
-          <ErrorMessage name="returnDate" component="div" className="text-danger" />
-        </Grid>
-      </Grid>
-    )}
-    <br></br>
-    {/* <hr/> */}
-   <br></br>
+            value={formik.values["row-radio-buttons-group"]}
+            className="mb-3"
+          >
+            <FormControlLabel
+              value="oneWay"
+              control={<Radio />}
+              label="One Way Trip"
+            />
+            <FormControlLabel
+              value="roundWay"
+              control={<Radio />}
+              label="Round Way Trip"
+            />
+            <FormControlLabel
+              value="multicity"
+              control={<Radio />}
+              label="Multicity Trip"
+            />
+          </RadioGroup>
+        </FormControl>
+        <br></br>
+        <hr />
+        <br></br>
+        {flightType === "multicity" && cities.map((city, index) => (
+          <div key={index} className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
+            <Field
+              name={`city${index}.to`}
+              as={TextField}
+              label={`To`}
+              variant="outlined"
+              fullWidth
+            />
+            <Field
+              name={`city${index}.from`}
+              as={TextField}
+              label={`From`}
+              variant="outlined"
+              fullWidth
+            />
+            <Field
+              name={`city${index}.departureDate`}
+              as={TextField}
+              label={`Departure Date`}
+              type="date"
+              variant="outlined"
+              fullWidth
+              InputLabelProps={{
+                shrink: true,
+              }}
+              inputProps={{
+                min: "2023-11-08", // Set the minimum date to November 8, 2023
+              }}
+            />
 
-   <div className="abccontainer">
-    <FormControl className="selectContainer">
-    <Select
-      name="guestForm" // Set the name attribute to match the form field name
-      label="add passenger"
-      variant="outlined"
-      placeholder="add passenger"
-      fullWidth
-      className="select"
-    >
-      <MenuItem className="guestType">
-        <Typography>Adults:</Typography>
-        <Box className="counter">
-          <Button
-            className="button"
-            disabled={adults === 0}
-            onClick={()=> setAdults(adults - 1)}
-            // onClick={() => formik.setFieldValue("number_of_adults", formik.values.number_of_adults - 1)}
-          >
-            -
-          </Button>
-          <Typography className="count">{adults}</Typography>
-          <Button
-            className="button"
-            onClick={()=> setAdults(adults + 1)}
+            <CiCircleRemove className="IconDiv" variant="outlined" onClick={() => handleRemoveCity(index)} />
 
-            // onClick={() => formik.setFieldValue("number_of_adults", formik.values.number_of_adults + 1)}
-          >
-            +
+          </div>
+        ))}
+        {flightType === "multicity" && (
+          <Button variant="outlined" onClick={handleAddCity} className="flightbtn">
+            Add Flight
           </Button>
-        </Box>
-      </MenuItem>
-      <MenuItem className="guestType">
-        <Typography>Children:</Typography>
-        <Box className="counter">
-          <Button
-            className="button"
-            disabled={children === 0}
-            onClick={()=> setChildren(children - 1)}
-            // onClick={() => formik.setFieldValue("number_of_children", formik.values.number_of_children - 1)}
-          >
-            -
-          </Button>
-          <Typography className="count">{children}</Typography>
-          <Button
-            className="button"
-            onClick={()=> setChildren(children + 1)}          >
-            +
-          </Button>
-        </Box>
-      </MenuItem>
-      <MenuItem className="guestType">
-        <Typography>Infants:</Typography>
-        <Box className="counter">
-          <Button
-            className="button"
-            disabled={infants === 0}
-            onClick={()=> setInfants(infants - 1)}
-            // onClick={() => formik.setFieldValue("number_of_infants", formik.values.number_of_infants - 1)}
-          >
-            -
-          </Button>
-          <Typography className="count">{infants}</Typography>
-          <Button
-            className="button"
-            onClick={()=> setInfants(infants + 1)}
-            // onClick={() => formik.setFieldValue("number_of_infants", formik.values.number_of_infants + 1)}
-          >
-            +
-          </Button>
-        </Box>
-      </MenuItem>
-    </Select>
-    <Button onClick={handleBookingSubmit}>test</Button>
-  </FormControl>
-</div>
+        )}
+
+        {flightType !== "multicity" && (
+          <Grid container spacing={3}>
+            <Grid item xs={3} className="mb-3">
+              <Field
+                name="origin"
+                as={TextField}
+                label="From"
+                variant="outlined"
+                fullWidth
+                onChange={(e) => setOriginValue(e.target.value)}
+
+              />
+              <ErrorMessage name="origin" component="div" className="text-danger" />
+            </Grid>
+            <Grid item xs={3} className="mb-3">
+              <Field
+                name="destination"
+                as={TextField}
+                label="Destination"
+                variant="outlined"
+                fullWidth
+                onChange={(e) => setDestinationValue(e.target.value)}
+
+              />
+              <ErrorMessage name="destination" component="div" className="text-danger" />
+            </Grid>
+            <Grid item xs={3} className="mb-3">
+              <Field
+                name="journeyDate"
+                as={TextField}
+                label="Journey Date"
+                type="date"
+                variant="outlined"
+                fullWidth
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                inputProps={{
+                  min: "2023-11-08", // Set the minimum date to November 8, 2023
+                }}
+              />
+              <ErrorMessage name="journeyDate" component="div" className="text-danger" />
+            </Grid>
+            <Grid item xs={3} className="mb-3">
+              <Field
+                name="returnDate"
+                as={TextField}
+                label="Return Date"
+                type="date"
+                disabled={oneWayTrip}
+                variant="outlined"
+                fullWidth
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                inputProps={{
+                  min: "2023-11-08", // Set the minimum date to November 8, 2023
+                }}
+              />
+              <ErrorMessage name="returnDate" component="div" className="text-danger" />
+            </Grid>
+          </Grid>
+        )}
+        <br></br>
+        {/* <hr/> */}
+        <br></br>
+
+        <div className="abccontainer">
+          <FormControl className="selectContainer">
+            <Select
+              name="guestForm" // Set the name attribute to match the form field name
+              label="add passenger"
+              variant="outlined"
+              placeholder="add passenger"
+              fullWidth
+              className="select"
+            >
+              <MenuItem className="guestType">
+                <Typography>Adults:</Typography>
+                <Box className="counter">
+                  <Button
+                    className="button"
+                    disabled={adults === 0}
+                    onClick={() => setAdults(adults - 1)}
+                  // onClick={() => formik.setFieldValue("number_of_adults", formik.values.number_of_adults - 1)}
+                  >
+                    -
+                  </Button>
+                  <Typography className="count">{adults}</Typography>
+                  <Button
+                    className="button"
+                    onClick={() => setAdults(adults + 1)}
+
+                  // onClick={() => formik.setFieldValue("number_of_adults", formik.values.number_of_adults + 1)}
+                  >
+                    +
+                  </Button>
+                </Box>
+              </MenuItem>
+              <MenuItem className="guestType">
+                <Typography>Children:</Typography>
+                <Box className="counter">
+                  <Button
+                    className="button"
+                    disabled={children === 0}
+                    onClick={() => setChildren(children - 1)}
+                  // onClick={() => formik.setFieldValue("number_of_children", formik.values.number_of_children - 1)}
+                  >
+                    -
+                  </Button>
+                  <Typography className="count">{children}</Typography>
+                  <Button
+                    className="button"
+                    onClick={() => setChildren(children + 1)}          >
+                    +
+                  </Button>
+                </Box>
+              </MenuItem>
+              <MenuItem className="guestType">
+                <Typography>Infants:</Typography>
+                <Box className="counter">
+                  <Button
+                    className="button"
+                    disabled={infants === 0}
+                    onClick={() => setInfants(infants - 1)}
+                  // onClick={() => formik.setFieldValue("number_of_infants", formik.values.number_of_infants - 1)}
+                  >
+                    -
+                  </Button>
+                  <Typography className="count">{infants}</Typography>
+                  <Button
+                    className="button"
+                    onClick={() => setInfants(infants + 1)}
+                  // onClick={() => formik.setFieldValue("number_of_infants", formik.values.number_of_infants + 1)}
+                  >
+                    +
+                  </Button>
+                </Box>
+              </MenuItem>
+            </Select>
+            <Button className="button" onClick={handleBookingSubmit}>test</Button>
+          </FormControl>
+        </div>
 
 
-    </div>
-<br></br>
-<hr></hr>
-<br></br>
-  <br></br>
-  
-  </>
-  ); 
+      </div>
+      <br></br>
+      <hr></hr>
+      <br></br>
+      <br></br>
+
+    </>
+  );
 };
 
 export default BookingInfo;

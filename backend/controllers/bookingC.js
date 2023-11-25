@@ -1,14 +1,49 @@
 import Booking from "../models/bookingM.js";
-
+import Flight from "../models/flightM.js";
 // Controller to handle flight booking creation
 const createBooking = async (req, res) => {
   try {
     console.log('Received data for booking:', req.body);
+
     const newBooking = new Booking(req.body);
     const savedBooking = await newBooking.save();
     console.log('Booking created successfully:', savedBooking);
+
+    let economySeats = 0;
+    let businessSeats = 0;
+
+    // Assuming you have variables economy and business defined somewhere
+    const flight = await Flight.findById(savedBooking.flight_id);
+
+    if (flight) {
+      economySeats = flight.seatAvailability.economy;
+      businessSeats = flight.seatAvailability.business;
+
+      if (savedBooking.flightClass === 'economy') {
+        economySeats = economySeats - savedBooking.adults - savedBooking.children;
+      } else if (savedBooking.flightClass === 'business') {
+        businessSeats = businessSeats - savedBooking.adults - savedBooking.children;
+      }
+
+      const updatedFlight = await Flight.findByIdAndUpdate(
+        savedBooking.flight_id,
+        {
+          $set: {
+            seatAvailability: {
+              economy: economySeats,
+              business: businessSeats,
+            },
+          },
+        },
+        { new: true }
+      );
+
+      console.log('Flight updated successfully:', updatedFlight);
+    }
+
     res.status(201).json(savedBooking);
   } catch (error) {
+    console.error('Error creating booking:', error);
     res.status(500).json({ error: error.message });
   }
 };
@@ -29,7 +64,8 @@ const getBookingById = async (req, res) => {
   try {
     const booking = await Booking.findById(req.params.bookingId);
     if (booking) {
-      res.status(200).json(booking);
+     const flight = await Flight.findById(booking.flight_id);
+      res.status(200).json({booking,flight});
     } else {
       res.status(404).json({ message: "Booking not found" });
     }

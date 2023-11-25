@@ -21,7 +21,7 @@ export const formDefaultValues = {
       firstName: "",
       surname: "",
       date_of_birth: "",
-      gender: "",
+      gender: "male",
     },
   ],
   infants: [
