@@ -89,65 +89,70 @@ const FlightDetails = ({ formData, updateFormData, nextStep }) => {
               className='FlightLogo'
               image={flight.airlineLogo} // Make sure these paths are correct
             />
-            <Typography className='text1' variant="body1">
+            {/* <Typography className='text1' variant="body1">
               {flight.timing} {flight.departure}
-            </Typography>
+            </Typography> */}
+            <Typography variant="body1" className='text1' >{flight.origin}</Typography>
             <div>
               <CardMedia
                 component="img"
                 alt="Sample Image"
                 height="150"
-                style={{ maxWidth: '100px' }}
+                style={{ maxWidth: '100px', marginLeft: "100px", marginRight: "100px" }}
                 image={FLIGHT} // Make sure this path is correct
               />
-              <Typography variant="body1">{flight.origin}</Typography>
+
             </div>
-            <Typography variant="body1">
-              {flight.destination} {flight.dtiming}
-            </Typography>
+            <Typography variant="body1" className='text1' >  {flight.destination}  </Typography>
 
-            <Typography variant="body1">{flight.fare.business.adult}</Typography>
 
-            <Card>
+            <Card style={{ marginLeft: " 400px" }}>
               <CardContent>
 
                 <Typography variant="h5" component="div">
                   Business
                 </Typography>
-                <Typography color="text.secondary">
-                  Adult
-                </Typography>
-                <Typography variant="body2">
-                  {flight.fare.business.adult}
-                </Typography>
-                <Typography color="text.secondary">
-                  Child
-                </Typography>
+                {flight.seatAvailability.business === 0 ?
+
+                  <Typography color="text.secondary">
+                    No seats available
+                  </Typography> : <>
+                    <Typography color="text.secondary">
+                      Avaiable Seats
+                    </Typography>
+
+                    <Typography color="text.secondary">
+                      {flight.seatAvailability.business}
+
+                    </Typography>
+                  </>}
 
                 <Typography variant="body2">
-                  {flight.fare.business.child}
+
                 </Typography>
               </CardContent>
 
             </Card>
-            <Card style={{ marginLeft: 10 }}>
+            <Card style={{ marginLeft: " 20px" }}>
               <CardContent>
 
                 <Typography variant="h5" component="div">
                   Economy
-                </Typography>
-                <Typography color="text.secondary">
-                  Adul
-                </Typography>
-                <Typography variant="body2">
-                  {flight.fare.economy.adult}
-                </Typography>
-                <Typography color="text.secondary">
-                  Child
-                </Typography>
-                <Typography variant="body2">
-                  {flight.fare.economy.child}
-                </Typography>
+                  </Typography>
+                {flight.seatAvailability.economy === 0 ?
+
+                  <Typography color="text.secondary">
+                    No seats available
+                  </Typography> : <>
+                    <Typography color="text.secondary">
+                      Avaiable Seats
+                    </Typography>
+
+                    <Typography color="text.secondary">
+                      {flight.seatAvailability.economy}
+
+                    </Typography>
+                  </>}
               </CardContent>
 
             </Card>
@@ -168,9 +173,9 @@ const FlightDetails = ({ formData, updateFormData, nextStep }) => {
                 </Grid>
                 <Grid item xs={4}>
                   <Field
-                    name="code"
+                    name="Id"
                     as={TextField}
-                    label="Code"
+                    label="Id"
                     variant="outlined"
                     value={formData.flight_id}
                     fullWidth={true}

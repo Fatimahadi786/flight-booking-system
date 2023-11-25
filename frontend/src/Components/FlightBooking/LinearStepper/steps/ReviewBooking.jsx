@@ -143,42 +143,42 @@ const {
             <TableHead>
               <TableRow>
                 <TableCell>Passenger</TableCell>
-                <TableCell>Surname</TableCell>
-                <TableCell>First Name</TableCell>
-                <TableCell>Date of Birth</TableCell>
+                <TableCell>Name</TableCell>
+                <TableCell>Age</TableCell>
                 <TableCell>Email</TableCell>
                 <TableCell>Phone Number</TableCell>
+                <TableCell>Gender</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {adultFields.map((field, index) => (
                 <TableRow key={index}>
                   <TableCell>Adult {index + 1}</TableCell>
-                  <TableCell>{field.surName}</TableCell>
-                  <TableCell>{field.firstName}</TableCell>
-                  <TableCell>{field.date_of_birth}</TableCell>
+                  <TableCell>{field.name}</TableCell>
+                  <TableCell>{field.age}</TableCell>
                   <TableCell>{field.email}</TableCell>
                   <TableCell>{field.phoneNumber}</TableCell>
+                  <TableCell>{field.gender}</TableCell>
                 </TableRow>
               ))}
               {childrenFields.map((field, index) => (
                 <TableRow key={index}>
                   <TableCell>Child {index + 1}</TableCell>
-                  <TableCell>{field.surName}</TableCell>
-                  <TableCell>{field.firstName}</TableCell>
-                  <TableCell>{field.date_of_birth}</TableCell>
+                  <TableCell>{field.name}</TableCell>
+                  <TableCell>{field.age}</TableCell>
                   <TableCell>{field.email}</TableCell>
                   <TableCell>{field.phoneNumber}</TableCell>
+                  <TableCell>{field.gender}</TableCell>
                 </TableRow>
               ))}
               {infantFields.map((field, index) => (
                 <TableRow key={index}>
                   <TableCell>Infant {index + 1}</TableCell>
-                  <TableCell>{field.surName}</TableCell>
-                  <TableCell>{field.firstName}</TableCell>
-                  <TableCell>{field.date_of_birth}</TableCell>
+                  <TableCell>{field.name}</TableCell>
+                  <TableCell>{field.age}</TableCell>
                   <TableCell>{field.email}</TableCell>
                   <TableCell>{field.phoneNumber}</TableCell>
+                  <TableCell>{field.gender}</TableCell>
                 </TableRow>
               ))}
             </TableBody>

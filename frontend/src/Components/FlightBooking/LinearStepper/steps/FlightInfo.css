@@ -1,38 +1,41 @@
-/* Style for the entire Accordion */
+/* FlightInfo.css */
+
+/* Style for the entire card container */
+.flightCard {
+  /* Define styles for the entire card container here */
+  border: 1px solid #ccc;
+  padding: 15px;
+  margin-bottom: 10px;
+}
+
+/* Styles for the flight logo */
+.FlightLogo {
+  max-width: 50px;
+  height: 50px;
+  object-fit: contain; /* This will ensure the image fits within the defined space */
+}
+
+/* Styles for text1 */
+.text1 {
+  /* Define styles for text1 here */
+  text-align: center;
+  font-weight: bold;
+  font-size: 50px;
+}
+
+/* Styles for the accordion */
 .accordion {
-  margin: 10px; /* Add your desired margin here */
-  border: 1px solid #c5b509; /* Add your desired border styles */
-  border-radius: 5px; /* Add your desired border radius */
-
-  .FlightLogo{
-    margin-left: 30px;
-    width: 100%;
-  }
-  .text1{
-    font-weight: bold;
-    display: flex;
-   
-  }
-}
-* Style for the select container */
-.selectContainer {
-  flex: 1;
-  margin: 10px;
-}
-
-/* Style for the select element */
-.select {
-  width: 100%;
-  padding: 1px;
-  border: none; /* Remove the border */
-  border-radius: 5px;
-  /* background-color: #fff; */
-}
-
-/* Style for the menu items within the select */
-.menuItem {
-  display: flex;
+  /* Define styles for the accordion here */
+  margin-bottom: 20px;
+  background-color: white;
   align-items: center;
-  color: #333;
+
+  .text1 {
+    /* Define styles for text1 here */
+    font-weight: bold;
+    font-size: 20px;
+    margin-left: 50px;
+  }
 }
 
+/* Adjust and add more styles as needed */
