@@ -7,6 +7,7 @@ import Loginform from './Components/webpages/Login';
 import AboutPage from './Components/webpages/About';
 import ContactForm from './Components/webpages/Contact';
 import LinearStepper from './Components/FlightBooking/LinearStepper/LinearStepper';
+import PDF from './Components/FlightBooking/LinearStepper/Components/pdf';
 
 
 const App = () => {
@@ -23,6 +24,7 @@ const App = () => {
         <Route path="contact" element={<ContactForm />} />
         <Route path="Login" element={<Loginform />} />
         <Route path="signUp" element={<Registration />} />
+        <Route path="/pdf/:id" element={<PDF />} />
       </Routes>
     </Router>
     </div>
