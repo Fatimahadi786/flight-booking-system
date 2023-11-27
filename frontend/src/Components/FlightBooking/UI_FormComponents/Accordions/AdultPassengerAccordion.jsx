@@ -4,7 +4,7 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { Container, TextField } from "@mui/material";
+import { Container, TextField ,MenuItem} from "@mui/material";
 import { Field } from "formik"; // Import Field from Formik
 
 function AdultPassengerDetailAccordion({ title, subtitle, index }) {
@@ -30,9 +30,9 @@ function AdultPassengerDetailAccordion({ title, subtitle, index }) {
 
           <Container style={{ marginTop: "20px", paddingLeft: "0px" }}>
             <Field
-              name={`adults.${index}.surName`}
+              name={`adults.${index}.fullName`}
               as={TextField}
-              label="Surname"
+              label="fullName"
               variant="outlined"
               margin="dense"
               fullWidth={true}
@@ -42,9 +42,9 @@ function AdultPassengerDetailAccordion({ title, subtitle, index }) {
             />
 
             <Field
-              name={`adults.${index}.firstName`}
+              name={`adults.${index}.age`}
               as={TextField}
-              label="First Name"
+              label="age"
               variant="outlined"
               margin="dense"
               fullWidth={true}
@@ -74,18 +74,21 @@ function AdultPassengerDetailAccordion({ title, subtitle, index }) {
                 shrink: true,
               }}
             />
-            <Field
-              name={`adults.${index}.date_of_birth_of_adult`}
-              as={TextField}
-              label="Date of Birth"
-              variant="outlined"
-              margin="dense"
-              fullWidth={true}
-              type="date"
-              InputLabelProps={{
-                shrink: true,
-              }}
-            />
+             <Field
+      name={`${index}.gender`}
+      as={TextField}
+      label="Gender"
+      variant="outlined"
+      margin="dense"
+      fullWidth={true}
+      select
+      InputLabelProps={{
+        shrink: true,
+      }}
+    >
+      <MenuItem value="male">Male</MenuItem>
+      <MenuItem value="female">Female</MenuItem>
+    </Field>
           </Container>
         </AccordionDetails>
       </Accordion>

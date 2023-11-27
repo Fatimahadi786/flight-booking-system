@@ -9,7 +9,7 @@ import CardMedia from '@mui/material/CardMedia';
 import './FlightInfo.css'
 
 // Define sample flight data
-
+import { FaArrowAltCircleDown } from "react-icons/fa";
 import FLIGHT from '../../../Images/flight.jpg';
 import axios from 'axios';
 
@@ -89,24 +89,26 @@ const FlightDetails = ({ formData, updateFormData, nextStep }) => {
               className='FlightLogo'
               image={flight.airlineLogo} // Make sure these paths are correct
             />
-            {/* <Typography className='text1' variant="body1">
-              {flight.timing} {flight.departure}
-            </Typography> */}
-            <Typography variant="body1" className='text1' >{flight.origin}</Typography>
-            <div>
+            <Typography variant="body1" className='text1'>
+            <span className="origin">{flight.origin}</span> <span className="journeyTime">{flight.journeyTime}</span>
+</Typography>
+   <div>
               <CardMedia
                 component="img"
                 alt="Sample Image"
                 height="150"
-                style={{ maxWidth: '100px', marginLeft: "100px", marginRight: "100px" }}
+                className='flight'
+              
                 image={FLIGHT} // Make sure this path is correct
               />
 
             </div>
-            <Typography variant="body1" className='text1' >  {flight.destination}  </Typography>
+         
+<Typography variant="body1" className='text2' >
+            <span className="origin">{flight.destination}</span> <span className="journeyTime">{flight.arrivalTime}</span>
+</Typography>
 
-
-            <Card style={{ marginLeft: " 400px" }}>
+<Card style={{ marginLeft: " 100px" }}>
               <CardContent>
 
                 <Typography variant="h5" component="div">
@@ -133,7 +135,7 @@ const FlightDetails = ({ formData, updateFormData, nextStep }) => {
               </CardContent>
 
             </Card>
-            <Card style={{ marginLeft: " 20px" }}>
+            <Card style={{ marginLeft: " 50px" }}>
               <CardContent>
 
                 <Typography variant="h5" component="div">
@@ -154,8 +156,9 @@ const FlightDetails = ({ formData, updateFormData, nextStep }) => {
                     </Typography>
                   </>}
               </CardContent>
-
+            
             </Card>
+            <FaArrowAltCircleDown className='arrow-icon' />
           </AccordionSummary>
           <AccordionDetails>
             <Card>
@@ -164,7 +167,6 @@ const FlightDetails = ({ formData, updateFormData, nextStep }) => {
                   <Field
                     name="company"
                     as={TextField}
-                    label="Airline"
                     variant="outlined"
                     value={formData.airline}
                     fullWidth={true}
@@ -175,7 +177,7 @@ const FlightDetails = ({ formData, updateFormData, nextStep }) => {
                   <Field
                     name="Id"
                     as={TextField}
-                    label="Id"
+                
                     variant="outlined"
                     value={formData.flight_id}
                     fullWidth={true}
@@ -185,7 +187,7 @@ const FlightDetails = ({ formData, updateFormData, nextStep }) => {
                   <Field
                     name="cabin"
                     as={Select}
-                    label="Class"
+                  
                     variant="outlined"
                     value={selectedType}
                     fullWidth={true}
@@ -201,7 +203,7 @@ const FlightDetails = ({ formData, updateFormData, nextStep }) => {
                   <Field
                     name="adultFare"
                     as={TextField}
-                    label="Adult Fare"
+                   
                     variant="outlined"
                     fullWidth={true}
                     value={selectedType === 'business'
@@ -214,7 +216,7 @@ const FlightDetails = ({ formData, updateFormData, nextStep }) => {
                   <Field
                     name="childFare"
                     as={TextField}
-                    label="Children Fare"
+                  
                     variant="outlined"
                     fullWidth={true}
                     value={
@@ -228,7 +230,7 @@ const FlightDetails = ({ formData, updateFormData, nextStep }) => {
                   <Field
                     name="infantFare"
                     as={TextField}
-                    label="Infant Fare"
+                   
                     variant="outlined"
                     fullWidth={true}
                     value={

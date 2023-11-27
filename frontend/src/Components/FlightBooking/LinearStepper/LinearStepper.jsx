@@ -188,6 +188,7 @@ const LinearStepper = () => {
             Thanku 
             your ticket is comfirm 
           </Typography>
+          
         ) : (
           <>
             <Formik

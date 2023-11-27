@@ -136,11 +136,6 @@ const BookingInfo = ({ formData, updateFormData, nextStep }) => {
               control={<Radio />}
               label="Round Way Trip"
             />
-            <FormControlLabel
-              value="multicity"
-              control={<Radio />}
-              label="Multicity Trip"
-            />
           </RadioGroup>
         </FormControl>
         <br></br>
@@ -225,7 +220,7 @@ const BookingInfo = ({ formData, updateFormData, nextStep }) => {
                   shrink: true,
                 }}
                 inputProps={{
-                  min: "2023-11-08", // Set the minimum date to November 8, 2023
+                  min: "2023-11-27", // Set the minimum date to November 8, 2023
                 }}
               />
               <ErrorMessage name="journeyDate" component="div" className="text-danger" />
@@ -243,7 +238,7 @@ const BookingInfo = ({ formData, updateFormData, nextStep }) => {
                   shrink: true,
                 }}
                 inputProps={{
-                  min: "2023-11-08", // Set the minimum date to November 8, 2023
+                  min: "2023-11-27", // Set the minimum date to November 8, 2023
                 }}
               />
               <ErrorMessage name="returnDate" component="div" className="text-danger" />

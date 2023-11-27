@@ -47,7 +47,7 @@ const {
   const totalInfantFare = useMemo(()=> infants * infantFare , [infants,infantFare]);
 
   const totalAmount = useMemo(()=> Number.parseInt(totalAdultFare) + Number.parseInt(totalChildrenFare) , [totalAdultFare ,totalAdultFare,totalInfantFare] )
-  console.log('totalAmounttotalAmount' ,totalAdultFare, totalChildrenFare ,totalInfantFare)
+  console.log('totalAmounttotalAmoun  t' ,totalAdultFare, totalChildrenFare ,totalInfantFare)
   return (
     <>
       <React.Fragment>
@@ -73,7 +73,7 @@ const {
                 <TableCell>Return Date</TableCell>
                 <TableCell>{returnDate}</TableCell>
               </TableRow>
-              <TableRow>
+              {/* <TableRow>
                 <TableCell>Number of Adults</TableCell>
                 <TableCell>{adults}</TableCell>
               </TableRow>
@@ -84,7 +84,7 @@ const {
               <TableRow>
                 <TableCell>Number of Infants</TableCell>
                 <TableCell>{infants}</TableCell>
-              </TableRow>
+              </TableRow> */}
             </TableBody>
           </Table>
         </TableContainer>
@@ -119,7 +119,7 @@ const {
                 <TableCell>Total Infant Fare</TableCell>
                 <TableCell>{totalInfantFare}</TableCell>
               </TableRow>
-              <TableRow>
+              {/* <TableRow>
                 <TableCell>Sales Commission</TableCell>
                 <TableCell>{salesCommission}</TableCell>
               </TableRow>
@@ -130,7 +130,7 @@ const {
               <TableRow>
                 <TableCell>Discount</TableCell>
                 <TableCell>{discount}</TableCell>
-              </TableRow>
+              </TableRow> */}
             </TableBody>
           </Table>
         </TableContainer>
@@ -143,41 +143,42 @@ const {
             <TableHead>
               <TableRow>
                 <TableCell>Passenger</TableCell>
-                <TableCell>Name</TableCell>
+                <TableCell>FullName</TableCell>
                 <TableCell>Age</TableCell>
                 <TableCell>Email</TableCell>
                 <TableCell>Phone Number</TableCell>
                 <TableCell>Gender</TableCell>
+
               </TableRow>
             </TableHead>
             <TableBody>
               {adultFields.map((field, index) => (
                 <TableRow key={index}>
                   <TableCell>Adult {index + 1}</TableCell>
-                  <TableCell>{field.name}</TableCell>
+                  <TableCell>{field.fullName}</TableCell>
                   <TableCell>{field.age}</TableCell>
                   <TableCell>{field.email}</TableCell>
-                  <TableCell>{field.phoneNumber}</TableCell>
+                  <TableCell>{field.phone}</TableCell>
                   <TableCell>{field.gender}</TableCell>
                 </TableRow>
               ))}
               {childrenFields.map((field, index) => (
                 <TableRow key={index}>
                   <TableCell>Child {index + 1}</TableCell>
-                  <TableCell>{field.name}</TableCell>
+                  <TableCell>{field.fullName}</TableCell>
                   <TableCell>{field.age}</TableCell>
                   <TableCell>{field.email}</TableCell>
-                  <TableCell>{field.phoneNumber}</TableCell>
+                  <TableCell>{field.phone}</TableCell>
                   <TableCell>{field.gender}</TableCell>
                 </TableRow>
               ))}
               {infantFields.map((field, index) => (
                 <TableRow key={index}>
                   <TableCell>Infant {index + 1}</TableCell>
-                  <TableCell>{field.name}</TableCell>
+                  <TableCell>{field.fullName}</TableCell>
                   <TableCell>{field.age}</TableCell>
                   <TableCell>{field.email}</TableCell>
-                  <TableCell>{field.phoneNumber}</TableCell>
+                  <TableCell>{field.phone}</TableCell>
                   <TableCell>{field.gender}</TableCell>
                 </TableRow>
               ))}
@@ -221,7 +222,7 @@ const {
                 label="PNR Number"
                 variant="outlined"
                 fullWidth={true}
-                {...field}
+                {...field.id}
               />
             )}
           />
