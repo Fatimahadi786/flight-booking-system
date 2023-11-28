@@ -64,7 +64,7 @@ function AdultPassengerDetailAccordion({ title, subtitle, index }) {
               }}
             />
             <Field
-              name={`adults.${index}.phoneNumber`}
+              name={`adults.${index}.phone`}
               as={TextField}
               label="Phone Number"
               variant="outlined"

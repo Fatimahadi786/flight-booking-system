@@ -135,56 +135,60 @@ const {
           </Table>
         </TableContainer>
 
-        <Typography variant="h6" align="center" gutterBottom>
-          3 Passenger Details
-        </Typography>
-        <TableContainer component={Paper}>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>Passenger</TableCell>
-                <TableCell>FullName</TableCell>
-                <TableCell>Age</TableCell>
-                <TableCell>Email</TableCell>
-                <TableCell>Phone Number</TableCell>
-                <TableCell>Gender</TableCell>
+        // ... (existing code)
 
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {adultFields.map((field, index) => (
-                <TableRow key={index}>
-                  <TableCell>Adult {index + 1}</TableCell>
-                  <TableCell>{field.fullName}</TableCell>
-                  <TableCell>{field.age}</TableCell>
-                  <TableCell>{field.email}</TableCell>
-                  <TableCell>{field.phone}</TableCell>
-                  <TableCell>{field.gender}</TableCell>
-                </TableRow>
-              ))}
-              {childrenFields.map((field, index) => (
-                <TableRow key={index}>
-                  <TableCell>Child {index + 1}</TableCell>
-                  <TableCell>{field.fullName}</TableCell>
-                  <TableCell>{field.age}</TableCell>
-                  <TableCell>{field.email}</TableCell>
-                  <TableCell>{field.phone}</TableCell>
-                  <TableCell>{field.gender}</TableCell>
-                </TableRow>
-              ))}
-              {infantFields.map((field, index) => (
-                <TableRow key={index}>
-                  <TableCell>Infant {index + 1}</TableCell>
-                  <TableCell>{field.fullName}</TableCell>
-                  <TableCell>{field.age}</TableCell>
-                  <TableCell>{field.email}</TableCell>
-                  <TableCell>{field.phone}</TableCell>
-                  <TableCell>{field.gender}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+<Typography variant="h6" align="center" gutterBottom>
+  3 Passenger Details
+</Typography>
+<TableContainer component={Paper}>
+  <Table>
+    <TableHead>
+      <TableRow>
+        <TableCell>Passenger</TableCell>
+        <TableCell>FullName</TableCell>
+        <TableCell>Age</TableCell>
+        <TableCell>Email</TableCell>
+        <TableCell>Phone Number</TableCell>
+        <TableCell>Gender</TableCell>
+      </TableRow>
+    </TableHead>
+    <TableBody>
+      {adultFields && adultFields.map((field, index) => (
+        <TableRow key={index}>
+          <TableCell>Adult {index + 1}</TableCell>
+          <TableCell>{field && field.fullName}</TableCell>
+          <TableCell>{field && field.age}</TableCell>
+          <TableCell>{field && field.email}</TableCell>
+          <TableCell>{field && field.phone}</TableCell>
+          <TableCell>{field && field.gender}</TableCell>
+        </TableRow>
+      ))}
+      {childrenFields && childrenFields.map((field, index) => (
+        <TableRow key={index}>
+          <TableCell>Child {index + 1}</TableCell>
+          <TableCell>{field && field.fullName}</TableCell>
+          <TableCell>{field && field.age}</TableCell>
+          <TableCell>{field && field.email}</TableCell>
+          <TableCell>{field && field.phone}</TableCell>
+          <TableCell>{field && field.gender}</TableCell>
+        </TableRow>
+      ))}
+      {infantFields && infantFields.map((field, index) => (
+        <TableRow key={index}>
+          <TableCell>Infant {index + 1}</TableCell>
+          <TableCell>{field && field.fullName}</TableCell>
+          <TableCell>{field && field.age}</TableCell>
+          <TableCell>{field && field.email}</TableCell>
+          <TableCell>{field && field.phone}</TableCell>
+          <TableCell>{field && field.gender}</TableCell>
+        </TableRow>
+      ))}
+    </TableBody>
+  </Table>
+</TableContainer>
+
+// ... (existing code)
+
 
         <Typography variant="h6" align="center" gutterBottom>
           4 Fares Details

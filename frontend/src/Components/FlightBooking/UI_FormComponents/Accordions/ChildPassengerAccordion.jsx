@@ -1,6 +1,6 @@
 import React from "react";
 import { Field, Form, Formik } from "formik";
-import { Accordion, AccordionSummary, AccordionDetails, Typography } from "@mui/material";
+import { Accordion, AccordionSummary, AccordionDetails, Typography , MenuItem} from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Container, TextField } from "@mui/material";
 
@@ -20,9 +20,9 @@ function ChildPassengerDetailAccordion({ title, subtitle, index }) {
           <Typography color="darkgrey">{subtitle}</Typography>
           <Container style={{ marginTop: "20px", paddingLeft: "0px" }}>
             <Field
-              name={`children.${index}.surName`}
+              name={`children.${index}.fullName`}
               as={TextField}
-              label="Surname"
+              label="Full Name"
               variant="outlined"
               margin="dense"
               fullWidth={true}
@@ -31,9 +31,9 @@ function ChildPassengerDetailAccordion({ title, subtitle, index }) {
               }}
             />
             <Field
-              name={`children.${index}.firstName`}
+              name={`children.${index}.age`}
               as={TextField}
-              label="First Name"
+              label="Age"
               variant="outlined"
               margin="dense"
               fullWidth={true}
@@ -53,7 +53,7 @@ function ChildPassengerDetailAccordion({ title, subtitle, index }) {
               }}
             />
             <Field
-              name={`children.${index}.phoneNumber`}
+              name={`children.${index}.phone`}
               as={TextField}
               label="Phone Number"
               variant="outlined"
@@ -63,18 +63,21 @@ function ChildPassengerDetailAccordion({ title, subtitle, index }) {
                 shrink: true,
               }}
             />
-            <Field
-              name={`children.${index}.date_of_birth_of_children`}
-              as={TextField}
-              label="Date of Birth"
-              variant="outlined"
-              margin="dense"
-              fullWidth={true}
-              type="date"
-              InputLabelProps={{
-                shrink: true,
-              }}
-            />
+             <Field
+      name={`${index}.gender`}
+      as={TextField}
+      label="Gender"
+      variant="outlined"
+      margin="dense"
+      fullWidth={true}
+      select
+      InputLabelProps={{
+        shrink: true,
+      }}
+    >
+      <MenuItem value="male">Male</MenuItem>
+      <MenuItem value="female">Female</MenuItem>
+    </Field>
           </Container>
         </AccordionDetails>
       </Accordion>

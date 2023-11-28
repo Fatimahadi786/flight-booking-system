@@ -44,18 +44,11 @@ const removeNavbar = () =>{
         
       <li className="navItem">
         <Link to="/booking" className="navlink">Booking</Link>
-      </li>
-      
-      
-      <li className="navItem">
-        <Link to="/destinations" className="navlink">Destinations</Link>
-      </li>
-
-      
+      </li>   
       <li className="navItem">
         <Link to="/contact" className="navlink">Contact</Link>
       </li>
-      
+{/*       
       <div className='headerBtns flex'>
         <button className='btn loginBtn'>
           <Link to="/login">Login</Link>
@@ -63,7 +56,7 @@ const removeNavbar = () =>{
         <button className='btn'>
           <Link to="/signUp">SignUp</Link>
         </button>
-      </div>
+      </div> */}
     </ul>
         <div  onClick={removeNavbar} className="closeNavbar">
           <AiFillCloseCircle className='icon' />

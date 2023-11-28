@@ -22,9 +22,9 @@ function InfantPassengerDetailAccordion({ title, subtitle, index }) {
                 <Typography color="darkgrey">{subtitle}</Typography>
                 <Container style={{ marginTop: "20px", paddingLeft: "0px" }}>
                   <Field
-                    name={`infants.${index}.surName`}
+                    name={`infants.${index}.fullName`}
                     as={TextField}
-                    label="Surname"
+                    label="Full Name"
                     variant="outlined"
                     margin="dense"
                     fullWidth={true}
@@ -33,9 +33,9 @@ function InfantPassengerDetailAccordion({ title, subtitle, index }) {
                     }}
                   />
                   <Field
-                    name={`infants.${index}.firstName`}
+                    name={`infants.${index}.age`}
                     as={TextField}
-                    label="First Name"
+                    label="Age"
                     variant="outlined"
                     margin="dense"
                     fullWidth={true}
@@ -44,13 +44,13 @@ function InfantPassengerDetailAccordion({ title, subtitle, index }) {
                     }}
                   />
                   <Field
-                    name={`infants.${index}.date_of_birth_of_infant`}
+                    name={`infants.${index}.phone`}
                     as={TextField}
-                    label="Date of Birth"
+                    label="Phone NO"
                     variant="outlined"
                     margin="dense"
                     fullWidth={true}
-                    type="date"
+                    type="ohone"
                     InputLabelProps={{
                       shrink: true,
                     }}
