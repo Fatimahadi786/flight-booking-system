@@ -17,6 +17,7 @@ function PDF() {
 
     const getBookings = async () => {
         try {
+            console.log(`${apiUrl}/${id}`)
             const response = await axios.get(`${apiUrl}/${id}`, { withCredentials: true });
             const bookings = response.data;
             console.log(bookings)

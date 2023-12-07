@@ -14,24 +14,25 @@ var formDefaultValues = {
   number_of_children: 0,
   number_of_infants: 0,
   adults: [{
-    firstName: "",
-    surname: "",
-    date_of_birth: "",
-    phoneNumber: "",
+    fullName: "",
+    email: "",
+    age: "",
+    phone: "",
     gender: ""
   }],
   children: [{
-    firstName: "",
-    surname: "",
-    date_of_birth: "",
+    fullName: "",
+    email: "",
+    age: "",
+    phone: "",
     gender: ""
   }],
   infants: [{
-    firstName: "",
-    surname: "",
-    date_of_birth: "",
-    gender: "",
-    age: ""
+    fullName: "",
+    email: "",
+    age: "",
+    phone: "",
+    gender: ""
   }],
   airline: " ",
   cabin: "",

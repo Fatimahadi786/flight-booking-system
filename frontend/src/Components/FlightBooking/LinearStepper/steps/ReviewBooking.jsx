@@ -18,7 +18,9 @@ const ReviewBooking = ({ formData, updateFormData, nextStep }) => {
   const adultFields = formik.values.adults;
   const childrenFields = formik.values.children;
   const infantFields = formik.values.infants;
-
+  console.log('Adult Fields:', adultFields);
+  console.log('Children Fields:', childrenFields);
+  console.log('Infant Fields:', infantFields);
   console.log('updateFormDataupdateFormData' ,formData)
 const {
   origin,
@@ -41,6 +43,7 @@ const {
     childFare,
     infantFare,
   } =formData;
+  
 
   const totalAdultFare = useMemo(()=> adults * adultFare , [adults,adultFare]);
   const totalChildrenFare = useMemo(()=> children * childFare , [children,childFare]);
@@ -99,10 +102,10 @@ const {
                 <TableCell>Airline</TableCell>
                 <TableCell>{airline}</TableCell>
               </TableRow>
-              <TableRow>
+              {/* <TableRow>
                 <TableCell>Code</TableCell>
                 <TableCell>{code}</TableCell>
-              </TableRow>
+              </TableRow> */}
               <TableRow>
                 <TableCell>Cabin</TableCell>
                 <TableCell>{cabin}</TableCell>
@@ -135,7 +138,6 @@ const {
           </Table>
         </TableContainer>
 
-        // ... (existing code)
 
 <Typography variant="h6" align="center" gutterBottom>
   3 Passenger Details
@@ -187,7 +189,6 @@ const {
   </Table>
 </TableContainer>
 
-// ... (existing code)
 
 
         <Typography variant="h6" align="center" gutterBottom>
@@ -218,7 +219,7 @@ const {
           </Table>
         </TableContainer>
 
-        <Grid>
+        {/* <Grid>
           <Field
             name="pnrNumber"
             render={({ field }) => (
@@ -230,7 +231,7 @@ const {
               />
             )}
           />
-        </Grid>
+        </Grid> */}
       </React.Fragment>
     </>
   );

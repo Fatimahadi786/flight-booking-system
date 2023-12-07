@@ -6,40 +6,47 @@ const createBooking = async (req, res) => {
     console.log('Received data for booking:', req.body);
 
     const newBooking = new Booking(req.body);
+
+    // Assuming you have variables economy and business defined somewhere
+    const flight = await Flight.findById(newBooking.flight_id);
+
+    if (!flight) {
+      return res.status(404).json({ error: 'Flight not found' });
+    }
+
+    let economySeats = flight.seatAvailability.economy;
+    let businessSeats = flight.seatAvailability.business;
+
+    if (newBooking.flightClass === 'economy' && economySeats < newBooking.adults + newBooking.children) {
+      return res.status(400).json({ error: 'Not enough economy seats available' });
+    } else if (newBooking.flightClass === 'business' && businessSeats < newBooking.adults + newBooking.children) {
+      return res.status(400).json({ error: 'Not enough business seats available' });
+    }
+
     const savedBooking = await newBooking.save();
     console.log('Booking created successfully:', savedBooking);
 
-    let economySeats = 0;
-    let businessSeats = 0;
+    // Update seat availability after successful booking
+    if (newBooking.flightClass === 'economy') {
+      economySeats = economySeats - newBooking.adults - newBooking.children;
+    } else if (newBooking.flightClass === 'business') {
+      businessSeats = businessSeats - newBooking.adults - newBooking.children;
+    }
 
-    // Assuming you have variables economy and business defined somewhere
-    const flight = await Flight.findById(savedBooking.flight_id);
-
-    if (flight) {
-      economySeats = flight.seatAvailability.economy;
-      businessSeats = flight.seatAvailability.business;
-
-      if (savedBooking.flightClass === 'economy') {
-        economySeats = economySeats - savedBooking.adults - savedBooking.children;
-      } else if (savedBooking.flightClass === 'business') {
-        businessSeats = businessSeats - savedBooking.adults - savedBooking.children;
-      }
-
-      const updatedFlight = await Flight.findByIdAndUpdate(
-        savedBooking.flight_id,
-        {
-          $set: {
-            seatAvailability: {
-              economy: economySeats,
-              business: businessSeats,
-            },
+    const updatedFlight = await Flight.findByIdAndUpdate(
+      newBooking.flight_id,
+      {
+        $set: {
+          seatAvailability: {
+            economy: economySeats,
+            business: businessSeats,
           },
         },
-        { new: true }
-      );
+      },
+      { new: true }
+    );
 
-      console.log('Flight updated successfully:', updatedFlight);
-    }
+    console.log('Flight updated successfully:', updatedFlight);
 
     res.status(201).json(savedBooking);
   } catch (error) {
@@ -47,6 +54,7 @@ const createBooking = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
 
 
 // Controller to get all flight bookings

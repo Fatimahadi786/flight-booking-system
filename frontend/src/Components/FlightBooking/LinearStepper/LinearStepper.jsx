@@ -15,6 +15,7 @@ import FlightInfo from "./steps/FlightInfo";
 import PassengerInfo from "./steps/PassengerInfo";
 import ReviewBooking from "./steps/ReviewBooking";
 import axios from "axios";
+import { Link } from "react-router-dom";
 function getSteps() {
   return [
     "Booking Information",
@@ -51,57 +52,63 @@ const LinearStepper = () => {
   const [skippedSteps, setSkippedSteps] = useState([]);
   const steps = getSteps();
   const [formData, setFormData] = useState({}); // Example state to hold form data
-  console.log(formData)
+  // console.log(formData)
+  const [data, setData] = useState();
 
   async function submitBooking(values, formValue) {
-    console.log("dataincom", values, formValue)
-  
-    const newData = {
-      flightType: formValue.flightType,
-      flight_id: formValue.flight_id,
-      company: formValue.airline,
-      origin: values.origin,
-      destination: values.destination,
-      journeyDate: values.journeyDate,
-      returnDate: values.returnDate,
-      journeyTime: formValue.journeyTime,
-      arrivalTime: formValue.arrivalTime,
-      hour: formValue.hour,
-      adultFare: formValue.adultFare,
-      childFare: formValue.childFare,
-      adults: formValue.adults,
-      children: formValue.children, 
-      flightClass:formValue.cabin,
-      pnrNumber :values.pnrNumber,
-      passengers: [
-        ...values.adults
-          .filter((item) => item.firstName !== "")
-          .map((item) => ({
-            fullName: item.firstName,
-            age: item?.age ?? 0,  // Provide the actual age from your form
-            gender: item.gender,
-            email: item.email,
-            phone: item.phoneNumber,
-          })),
-        ...values.children
-          .filter((item) => item.firstName !== "")
-          .map((item) => ({
-            fullName: item.firstName,
-            age: item?.age ?? 0,  // Provide the actual age from your form
-            gender: item.gender,
-            email: item.email,
-            phone: item.phoneNumber,
-          })),
-      ],
-    };
-    
-    
-    const response = await axios.post(`http://localhost:8800/api/booking/bookings`, newData);
-    if(response.status === 201)
-    {
-      nextStep();
+    // console.log("dataincom", values, formValue)
+
+    try {
+      const newData = {
+        flightType: formValue.flightType,
+        flight_id: formValue.flight_id,
+        company: formValue.airline,
+        origin: values.origin,
+        destination: values.destination,
+        journeyDate: values.journeyDate,
+        returnDate: values.returnDate,
+        journeyTime: formValue.journeyTime,
+        arrivalTime: formValue.arrivalTime,
+        hour: formValue.hour,
+        adultFare: formValue.adultFare,
+        childFare: formValue.childFare,
+        adults: formValue.adults,
+        children: formValue.children,
+        flightClass: formValue.cabin,
+        pnrNumber: values.pnrNumber,
+        passengers: [
+          ...values.adults
+            .filter((item) => item.fullName !== "")
+            .map((item) => ({
+              fullName: item.fullName,
+              age: item?.age ?? 0,  // Provide the actual age from your form
+              gender: item.gender,
+              email: item.email,
+              phone: item.phone,
+            })),
+          ...values.children
+            .filter((item) => item.fullName !== "")
+            .map((item) => ({
+              fullName: item.fullName,
+              age: item?.age ?? 0,  // Provide the actual age from your form
+              gender: item.gender,
+              email: item.email,
+              phone: item.phone,
+            })),
+        ],
+      };
+
+
+      const response = await axios.post(`http://localhost:8800/api/booking/bookings`, newData);
+      if (response.status === 201) {
+        nextStep();
+        setData(response);
+      }
+      console.log("res", response);
+    } catch (error) {
+      setData(error);
+      console.log("err", error);
     }
-    return response;
   }
 
 
@@ -181,14 +188,32 @@ const LinearStepper = () => {
           );
         })}
       </Stepper>
-
+      {data && data.response && data.response.status === 400 ? (
+        <Typography variant="h3" align="center">
+          {data.response.data.error}
+        </Typography>
+      ) : (
+        ""
+      )}
       <React.Fragment>
         {activeStep === steps.length ? (
-          <Typography variant="h3" align="center">
-            Thanku 
-            your ticket is comfirm 
-          </Typography>
-          
+          <>
+
+            <Typography variant="h3" align="center">
+              Thanku
+              your ticket is comfirm
+            </Typography>
+            {data && data.data._id != null ?
+              <Link to={`/pdf/${data.data._id}`}>
+                <Typography variant="h3" align="center">
+                  Download Your Ticket
+                </Typography>
+              </Link>
+              : ""
+            }
+
+          </>
+
         ) : (
           <>
             <Formik
@@ -223,11 +248,14 @@ const LinearStepper = () => {
                     </Button>
                     {
                       activeStep === steps.length - 1 ?
+                        
+                     
                         <button
                           type="submit"
                         >
                           Submit
                         </button>
+                        
                         :
                         <Button
                           className={classes.button}

@@ -14,6 +14,7 @@ function PDF() {
     useEffect(() => {
         getBookings();
     }, []);
+    
 
     const getBookings = async () => {
         try {
@@ -32,7 +33,11 @@ function PDF() {
             console.error('Error fetching bookings:', error);
         }
     };
-    console.log(bookingList)
+    useEffect(() => {
+        if (!isLoading) {
+            window.print();
+        }
+    }, [isLoading]);
     return (
         <div>
             <FlightTicket data={bookingList} flight={FlightList}/>

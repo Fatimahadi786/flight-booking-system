@@ -80,6 +80,35 @@ export const updateFlight = async (req, res, next) => {
     next(error);
   }
 };
+// flightC.js
+
+// flightC.js
+
+// flightC.js
+
+// flightC.js
+
+export const getFlightById = async (req, res) => {
+  const flightId = req.params.id;
+
+  try {
+    console.log('Flight ID:', flightId);
+    const flight = await FlightModel.findById(flightId);
+
+    if (!flight) {
+      return res.status(404).json({ error: 'Flight not found' });
+    }
+
+    res.json(flight);
+  } catch (error) {
+    console.error('Error retrieving flight:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
+
+
+
 
 // Controller to handle deleting a flight by flightNumber
 export const deleteFlight = async (req, res, next) => {

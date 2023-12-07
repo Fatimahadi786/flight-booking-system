@@ -4,11 +4,12 @@ import express from 'express';
 import {
   createFlight,
   getAllFlights,
-  getFlightByNumber, // Corrected function name
-  updateFlight, // Corrected function name
-  deleteFlight,
+  getFlightByNumber,
+  updateFlight,
+  deleteFlight, // Correct import syntax
+  getFlightById,
   getFlightByDate
-} from '../controllers/flightC.js'; // Replace with the actual path to your controller file
+} from '../controllers/flightC.js';
 
 const router = express.Router();
 
@@ -25,8 +26,7 @@ router.get('/flight/:date', getFlightByDate);
 
 // Update a flight by flight number
 router.put('/flights/:flightNumber', updateFlight);
-
+router.get('/flights/:id', getFlightById);
 // Delete a flight by flight number
-router.delete('/flights/:flightNumber', deleteFlight);
 
 export default router;

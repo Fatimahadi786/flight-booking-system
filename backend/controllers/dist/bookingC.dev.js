@@ -7,41 +7,106 @@ exports.deleteBooking = exports.updateBooking = exports.getBookingById = exports
 
 var _bookingM = _interopRequireDefault(require("../models/bookingM.js"));
 
+var _flightM = _interopRequireDefault(require("../models/flightM.js"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 // Controller to handle flight booking creation
 var createBooking = function createBooking(req, res) {
-  var newBooking, savedBooking;
+  var newBooking, flight, economySeats, businessSeats, savedBooking, updatedFlight;
   return regeneratorRuntime.async(function createBooking$(_context) {
     while (1) {
       switch (_context.prev = _context.next) {
         case 0:
           _context.prev = 0;
           console.log('Received data for booking:', req.body);
-          newBooking = new _bookingM["default"](req.body);
+          newBooking = new _bookingM["default"](req.body); // Assuming you have variables economy and business defined somewhere
+
           _context.next = 5;
-          return regeneratorRuntime.awrap(newBooking.save());
+          return regeneratorRuntime.awrap(_flightM["default"].findById(newBooking.flight_id));
 
         case 5:
+          flight = _context.sent;
+
+          if (flight) {
+            _context.next = 8;
+            break;
+          }
+
+          return _context.abrupt("return", res.status(404).json({
+            error: 'Flight not found'
+          }));
+
+        case 8:
+          economySeats = flight.seatAvailability.economy;
+          businessSeats = flight.seatAvailability.business;
+
+          if (!(newBooking.flightClass === 'economy' && economySeats < newBooking.adults + newBooking.children)) {
+            _context.next = 14;
+            break;
+          }
+
+          return _context.abrupt("return", res.status(400).json({
+            error: 'Not enough economy seats available'
+          }));
+
+        case 14:
+          if (!(newBooking.flightClass === 'business' && businessSeats < newBooking.adults + newBooking.children)) {
+            _context.next = 16;
+            break;
+          }
+
+          return _context.abrupt("return", res.status(400).json({
+            error: 'Not enough business seats available'
+          }));
+
+        case 16:
+          _context.next = 18;
+          return regeneratorRuntime.awrap(newBooking.save());
+
+        case 18:
           savedBooking = _context.sent;
-          console.log('Booking created successfully:', savedBooking);
+          console.log('Booking created successfully:', savedBooking); // Update seat availability after successful booking
+
+          if (newBooking.flightClass === 'economy') {
+            economySeats = economySeats - newBooking.adults - newBooking.children;
+          } else if (newBooking.flightClass === 'business') {
+            businessSeats = businessSeats - newBooking.adults - newBooking.children;
+          }
+
+          _context.next = 23;
+          return regeneratorRuntime.awrap(_flightM["default"].findByIdAndUpdate(newBooking.flight_id, {
+            $set: {
+              seatAvailability: {
+                economy: economySeats,
+                business: businessSeats
+              }
+            }
+          }, {
+            "new": true
+          }));
+
+        case 23:
+          updatedFlight = _context.sent;
+          console.log('Flight updated successfully:', updatedFlight);
           res.status(201).json(savedBooking);
-          _context.next = 13;
+          _context.next = 32;
           break;
 
-        case 10:
-          _context.prev = 10;
+        case 28:
+          _context.prev = 28;
           _context.t0 = _context["catch"](0);
+          console.error('Error creating booking:', _context.t0);
           res.status(500).json({
             error: _context.t0.message
           });
 
-        case 13:
+        case 32:
         case "end":
           return _context.stop();
       }
     }
-  }, null, null, [[0, 10]]);
+  }, null, null, [[0, 28]]);
 }; // Controller to get all flight bookings
 
 
@@ -82,7 +147,7 @@ var getAllBookings = function getAllBookings(req, res) {
 exports.getAllBookings = getAllBookings;
 
 var getBookingById = function getBookingById(req, res) {
-  var booking;
+  var booking, flight;
   return regeneratorRuntime.async(function getBookingById$(_context3) {
     while (1) {
       switch (_context3.prev = _context3.next) {
@@ -94,30 +159,45 @@ var getBookingById = function getBookingById(req, res) {
         case 3:
           booking = _context3.sent;
 
-          if (booking) {
-            res.status(200).json(booking);
-          } else {
-            res.status(404).json({
-              message: "Booking not found"
-            });
+          if (!booking) {
+            _context3.next = 11;
+            break;
           }
 
-          _context3.next = 10;
-          break;
+          _context3.next = 7;
+          return regeneratorRuntime.awrap(_flightM["default"].findById(booking.flight_id));
 
         case 7:
-          _context3.prev = 7;
+          flight = _context3.sent;
+          res.status(200).json({
+            booking: booking,
+            flight: flight
+          });
+          _context3.next = 12;
+          break;
+
+        case 11:
+          res.status(404).json({
+            message: "Booking not found"
+          });
+
+        case 12:
+          _context3.next = 17;
+          break;
+
+        case 14:
+          _context3.prev = 14;
           _context3.t0 = _context3["catch"](0);
           res.status(500).json({
             error: _context3.t0.message
           });
 
-        case 10:
+        case 17:
         case "end":
           return _context3.stop();
       }
     }
-  }, null, null, [[0, 7]]);
+  }, null, null, [[0, 14]]);
 }; // Controller to update a specific flight booking by ID
 
 

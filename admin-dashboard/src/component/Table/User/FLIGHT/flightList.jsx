@@ -32,58 +32,46 @@ function FlightList() {
     }
   };
 
-  const handleView = (id) => {
-    console.log(`Viewing flight with ID: ${id}`);
-    navigation(`/view/${id}`);
-  };
 
-  const handleEdit = (id) => {
-    console.log(`Editing flight with ID: ${id}`);
-    navigation(`/edit/${id}`);
-  };
 
-  const handleDelete = async (id) => {
-    try {
-      const confirmDelete = window.confirm('Are you sure you want to delete the flight?');
-      if (confirmDelete) {
-        await axios.delete(`http://localhost:8800/api/flights/${id}`, { withCredentials: true });
-        getFlights();
-      }
-    } catch (error) {
-      console.error('Error deleting flight:', error);
-    }
-  };
-  
+
+
 
   const getRowId = (row) => row._id;
 
   const columns = [
     { field: '_id', headerName: 'ID', flex: 1 },
-    { field: 'flightType', headerName: 'Flight Type', flex: 1 },
-    
     { field: 'journeyAirport', headerName: 'Departure Airport', flex: 1 },
     { field: 'arrivalAirport', headerName: 'Arrival Airport', flex: 1 },
     { field: 'journeyTime', headerName: 'Departure Time', flex: 1 },
     { field: 'arrivalTime', headerName: 'Arrival Time', flex: 1 },
     { field: 'hour', headerName: 'Duration (hours)', flex: 1 },
-    { field: 'price', headerName: 'Price', flex: 1 },
+    { field: 'airlineLogo', headerName: 'Airline Logo', flex: 1 },
+    { field: 'company', headerName: 'Company', flex: 1 },
+    { field: 'origin', headerName: 'Origin', flex: 1 },
+    { field: 'destination', headerName: 'Destination', flex: 1 },
+    { field: 'returnDate', headerName: 'Return Date', flex: 1 },
+    { field: 'journeyDate', headerName: 'Journey Date', flex: 1 },
+
+    // ... other fields
     {
       field: 'actions',
       headerName: 'Actions',
       width: 200,
       renderCell: (params) => (
         <div>
-        <button onClick={() => handleView(params.row._id)} className='btn btn-info btn-sm mr-1'>
-          View
-        </button>
-        <Link to={`/portal/addFlight/${params.row._id}`} className='btn btn-info btn-sm mr-1'>Edit</Link>
-        <button onClick={() => handleDelete(params.row._id)} className='btn btn-danger btn-sm mr-1'>
-          Delete
-        </button>
-      </div>
+          <Link to={`/portal/flight-view/${params.id}`} style={{ marginRight: '8px' }}>
+            Flight View
+          </Link>
+          <Link to={`/portal/flight-edit/${params.id}`}>
+            Flight Edit
+          </Link>
+
+        </div>
       ),
     },
   ];
+
 
   return (
     <>

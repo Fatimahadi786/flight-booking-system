@@ -33,8 +33,13 @@ const FlightDetails = ({ formData, updateFormData, nextStep }) => {
 
   async function getFlightData() {
     try {
-      const response = await axios.get(`${backendApiEndpoint}/flight/${FlightCustomerDetail.journeyDate}`);
-      setData(response.data.flight);
+      
+      const response = await axios.get(`${backendApiEndpoint}/flight/${FlightCustomerDetail.journeyDate}`)
+      .then((response)=>{
+        console.log("Flight Data ",response.data)
+        setData(response.data.flight);
+      })
+      
     } catch (error) {
       console.error('Error retrieving flight data:', error.message);
     }
@@ -48,9 +53,14 @@ const FlightDetails = ({ formData, updateFormData, nextStep }) => {
   const flightdata = data.filter((item) => {
     return (
       item.origin === FlightCustomerDetail.origin &&
-      item.destination === FlightCustomerDetail.destination
+      item.destination === FlightCustomerDetail.destination && 
+      (
+      item.seatAvailability.business >= 1 || 
+      item.seatAvailability.economy >=  1)
+      
     );
   });
+  
   const handleCheck = (flightIndex, value) => {
     setSelectType(value)
 
@@ -65,7 +75,7 @@ const FlightDetails = ({ formData, updateFormData, nextStep }) => {
       cabin: value,
       journeyTime: selectedFlight?.journeyTime,
       arrivalTime: selectedFlight?.arrivalTime,
-      hour:  selectedFlight?.hour,
+      hour: selectedFlight?.hour,
       childFare: value === 'business' ? selectedFlight?.fare?.business?.child : selectedFlight?.fare.economy.child,
       adultFare: value === 'business' ? selectedFlight?.fare.business.adult : selectedFlight?.fare.economy.adult
     };
@@ -90,31 +100,31 @@ const FlightDetails = ({ formData, updateFormData, nextStep }) => {
               image={flight.airlineLogo} // Make sure these paths are correct
             />
             <Typography variant="body1" className='text1'>
-            <span className="origin">{flight.origin}</span> <span className="journeyTime">{flight.journeyTime}</span>
-</Typography>
-   <div>
+              <span className="origin">{flight.origin}</span> <span className="journeyTime">{flight.journeyTime}</span>
+            </Typography>
+            <div>
               <CardMedia
                 component="img"
                 alt="Sample Image"
                 height="150"
                 className='flight'
-              
+
                 image={FLIGHT} // Make sure this path is correct
               />
 
             </div>
-         
-<Typography variant="body1" className='text2' >
-            <span className="origin">{flight.destination}</span> <span className="journeyTime">{flight.arrivalTime}</span>
-</Typography>
 
-<Card style={{ marginLeft: " 100px" }}>
+            <Typography variant="body1" className='text2' >
+              <span className="origin">{flight.destination}</span> <span className="journeyTime">{flight.arrivalTime}</span>
+            </Typography>
+
+            <Card style={{ marginLeft: " 100px" }}>
               <CardContent>
 
                 <Typography variant="h5" component="div">
                   Business
                 </Typography>
-                {flight.seatAvailability.business === 0 ?
+                {flight.seatAvailability.business <= 0 ?
 
                   <Typography color="text.secondary">
                     No seats available
@@ -140,8 +150,8 @@ const FlightDetails = ({ formData, updateFormData, nextStep }) => {
 
                 <Typography variant="h5" component="div">
                   Economy
-                  </Typography>
-                {flight.seatAvailability.economy === 0 ?
+                </Typography>
+                {flight.seatAvailability.economy <= 0 ?
 
                   <Typography color="text.secondary">
                     No seats available
@@ -156,7 +166,7 @@ const FlightDetails = ({ formData, updateFormData, nextStep }) => {
                     </Typography>
                   </>}
               </CardContent>
-            
+
             </Card>
             <FaArrowAltCircleDown className='arrow-icon' />
           </AccordionSummary>
@@ -177,7 +187,7 @@ const FlightDetails = ({ formData, updateFormData, nextStep }) => {
                   <Field
                     name="Id"
                     as={TextField}
-                
+
                     variant="outlined"
                     value={formData.flight_id}
                     fullWidth={true}
@@ -187,7 +197,7 @@ const FlightDetails = ({ formData, updateFormData, nextStep }) => {
                   <Field
                     name="cabin"
                     as={Select}
-                  
+
                     variant="outlined"
                     value={selectedType}
                     fullWidth={true}
@@ -203,7 +213,7 @@ const FlightDetails = ({ formData, updateFormData, nextStep }) => {
                   <Field
                     name="adultFare"
                     as={TextField}
-                   
+
                     variant="outlined"
                     fullWidth={true}
                     value={selectedType === 'business'
@@ -216,7 +226,7 @@ const FlightDetails = ({ formData, updateFormData, nextStep }) => {
                   <Field
                     name="childFare"
                     as={TextField}
-                  
+
                     variant="outlined"
                     fullWidth={true}
                     value={
@@ -230,7 +240,7 @@ const FlightDetails = ({ formData, updateFormData, nextStep }) => {
                   <Field
                     name="infantFare"
                     as={TextField}
-                   
+
                     variant="outlined"
                     fullWidth={true}
                     value={
